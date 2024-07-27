@@ -31,17 +31,11 @@ public class UrlService {
     }
 
     public Optional<UrlEntity> findByShortUrl(String url) {
-        Optional<UrlEntity> checkExists = this.repository.findByShortUrl(url);
-        if(checkExists.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-
-        return checkExists;
+        return this.repository.findByShortUrl(url);
     }
 
     public Optional<UrlEntity> findByDefaultUrl(String url) {
-        Optional<UrlEntity> checkExists = this.repository.findByDefaultUrl(url);
-        if(checkExists.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-
-        return checkExists;
+        return this.repository.findByDefaultUrl(url);
     }
 
     public List<UrlEntity> findAll() {
