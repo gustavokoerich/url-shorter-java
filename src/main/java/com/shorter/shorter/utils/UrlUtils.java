@@ -6,7 +6,7 @@ import java.util.Random;
 
 @UtilityClass
 public class UrlUtils {
-    public StringBuilder generateAleatoryUrl() {
+    public String generateAleatoryUrl() {
         char[] characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
         StringBuilder url = new StringBuilder(20);
         Random random = new Random();
@@ -14,6 +14,6 @@ public class UrlUtils {
             char aleatoryChar = characters[random.nextInt(characters.length)];
             url.append(aleatoryChar);
         }
-        return url;
+        return url.toString();
     }
 }

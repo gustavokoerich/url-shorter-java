@@ -22,6 +22,16 @@ public class UrlController {
         return this.service.findById(id);
     }
 
+    @RequestMapping(path = "/short/{url}", method = RequestMethod.GET)
+    public Optional<UrlEntity> findByShortUrl(@PathVariable String url) {
+        return this.service.findByShortUrl(url);
+    }
+
+    @RequestMapping(path = "/default", method = RequestMethod.POST)
+    public Optional<UrlEntity> findByDefaultUrl(@RequestBody UrlDto body) {
+        return this.service.findByDefaultUrl(body.defaultUrl());
+    }
+
     @RequestMapping(path = "/url", method = RequestMethod.GET)
     public List<UrlEntity> findAll() {
         return this.service.findAll();

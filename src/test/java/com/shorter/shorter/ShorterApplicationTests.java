@@ -25,22 +25,5 @@ class ShorterApplicationTests  {
 
 	private UrlUtils utils;
 
-	@Test
-	void findAll() {
-		UrlEntity newUrl = new UrlEntity("asuhdf", this.utils.generateAleatoryUrl());
-		this.service.shorterUrl("asdufhasudf");
-		System.out.println(this.service.findAll());
-	}
-
-
-	private UrlEntity createUrl(String defaultUrl) {
-		UrlEntity newUrl = new UrlEntity(defaultUrl, this.utils.generateAleatoryUrl());
-		this.service.shorterUrl("asdufhasudf");
-		return newUrl;
-	}
-
-	@Test
-	void contextLoads() {
-	}
 
 }
