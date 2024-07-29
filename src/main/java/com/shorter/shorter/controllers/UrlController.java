@@ -3,9 +3,12 @@ package com.shorter.shorter.controllers;
 import com.shorter.shorter.dtos.UrlDto;
 import com.shorter.shorter.entities.UrlEntity;
 import com.shorter.shorter.services.UrlService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +21,9 @@ public class UrlController {
 
     @Autowired
     UrlService service;
+
+    @Autowired
+    CacheManager cacheManager;
 
     @Cacheable(key = "#id", value = "url")
     @RequestMapping(path = "/url/{id}", method = RequestMethod.GET)
@@ -48,12 +54,15 @@ public class UrlController {
         return this.service.shorterUrl(body.defaultUrl());
     }
 
-    @CachePut(key = "#id + #url.defaultUrl +#url.shortUrl", value = "url")
+
+    @Caching(evict = {
+            @CacheEvict(value = "url", key = "#id"),
+            @CacheEvict(value = "url", key = "#url.shortUrl"),
+            @CacheEvict(value = "url", key = "#url.defaultUrl")
+    })
     @RequestMapping(path = "/url/{id}", method = RequestMethod.PUT)
-    public UrlEntity updateShortedUrl(@RequestBody UrlEntity url,
+    public UrlEntity updateShortedUrl(@NotNull  @RequestBody UrlDto url,
                                       @PathVariable UUID id) {
-        String shortUrl = url.getShortUrl();
-        String defaultUrl = url.getDefaultUrl();
-        return this.service.updateShortedUrl(id, url.getDefaultUrl());
+        return this.service.updateShortedUrl(id, url.defaultUrl());
     }
 }

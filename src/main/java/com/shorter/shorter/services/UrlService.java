@@ -3,6 +3,7 @@ import com.shorter.shorter.entities.UrlEntity;
 import com.shorter.shorter.repositories.UrlRepository;
 import com.shorter.shorter.utils.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +17,9 @@ public class UrlService {
 
     @Autowired
     private UrlRepository repository;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     private UrlUtils utils;
 
@@ -55,6 +59,7 @@ public class UrlService {
 
         String shortUrl = this.utils.generateAleatoryUrl();
         UrlEntity updatedUrl = new UrlEntity(defaultUrl, shortUrl);
+
         updatedUrl.setId(id);
         return this.repository.save(updatedUrl);
     }
