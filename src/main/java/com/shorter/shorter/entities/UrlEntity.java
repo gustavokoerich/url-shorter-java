@@ -1,18 +1,14 @@
 package com.shorter.shorter.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
 
-import java.util.Optional;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "url")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,11 +19,13 @@ public class UrlEntity {
     @GeneratedValue
     private UUID id;
 
-    private StringBuilder shortUrl;
+    @Column(unique = true)
+    private String shortUrl;
 
+    @Column(unique = true)
     private String defaultUrl;
 
-    public UrlEntity(String defaultUrl, StringBuilder shortUrl) {
+    public UrlEntity(String defaultUrl, String shortUrl) {
         this.defaultUrl = defaultUrl;
         this.shortUrl = shortUrl;
     }
@@ -39,7 +37,7 @@ public class UrlEntity {
         this.defaultUrl = defaultUrl;
     }
 
-    public void setShortUrl(StringBuilder shortUrl) {
+    public void setShortUrl(String shortUrl) {
         this.shortUrl = shortUrl;
     }
 
@@ -51,7 +49,7 @@ public class UrlEntity {
         return defaultUrl;
     }
 
-    public StringBuilder getShortUrl() {
+    public String getShortUrl() {
         return shortUrl;
     }
 

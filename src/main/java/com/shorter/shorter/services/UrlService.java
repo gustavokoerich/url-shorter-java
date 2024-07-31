@@ -19,25 +19,31 @@ public class UrlService {
 
     private UrlUtils utils;
 
-    public List<UrlEntity> findAll() {
-        return this.repository.findAll();
-    }
-
     public Optional<UrlEntity> findById(UUID id) {
         return this.repository.findById(id);
     }
 
+    public Optional<UrlEntity> findByShortUrl(String url) {
+        return this.repository.findByShortUrl(url);
+    }
+
+    public Optional<UrlEntity> findByDefaultUrl(String url) {
+        return this.repository.findByDefaultUrl(url);
+    }
+
+    public List<UrlEntity> findAll() {
+        return this.repository.findAll();
+    }
+
     public UrlEntity shorterUrl(String defaultUrl) {
-        StringBuilder shortUrl = this.utils.generateAleatoryUrl();
-        UrlEntity url = new UrlEntity(defaultUrl, shortUrl);
-        this.repository.save(url);
-        return url;
+        UrlEntity url = new UrlEntity(defaultUrl, this.utils.generateAleatoryUrl());
+        return this.repository.save(url);
     }
 
     public UrlEntity updateShortedUrl(UUID id, String defaultUrl) {
-        this.repository.findById(id).orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND) );
+        this.repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found!"));
 
-        StringBuilder shortUrl = this.utils.generateAleatoryUrl();
+        String shortUrl = this.utils.generateAleatoryUrl();
         UrlEntity updatedUrl = new UrlEntity(defaultUrl, shortUrl);
         updatedUrl.setId(id);
         return this.repository.save(updatedUrl);
