@@ -1,7 +1,5 @@
 server:
   port: 8081
-  error:
-    include-message: always
 
 spring:
   datasource:
@@ -12,7 +10,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
     open-in-view: true
 
 
