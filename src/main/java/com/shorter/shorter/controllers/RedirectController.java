@@ -22,7 +22,7 @@ public class RedirectController {
 
     @RequestMapping(path = "/{shortUrl}", method = RequestMethod.GET)
     public RedirectView redirectByShortUrl(@PathVariable String shortUrl) {
-        Optional<UrlEntity> url = this.service.redirectByShortUrl(shortUrl);
+        Optional<UrlEntity> url = this.service.findByShortUrl(shortUrl);
         if(url.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         return new RedirectView(url.get().getDefaultUrl());

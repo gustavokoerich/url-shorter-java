@@ -19,10 +19,6 @@ public class UrlService {
 
     private UrlUtils utils;
 
-    public Optional<UrlEntity> redirectByShortUrl(String shortUrl) {
-        return this.repository.findByShortUrl(shortUrl);
-    }
-
     public Optional<UrlEntity> findById(UUID id) {
         return this.repository.findById(id);
     }
