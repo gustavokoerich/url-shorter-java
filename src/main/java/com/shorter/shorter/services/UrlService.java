@@ -42,7 +42,7 @@ public class UrlService {
         return this.repository.findByDefaultUrl(url);
     }
 
-    public List<UrlEntity> findAll()"" {
+    public List<UrlEntity> findAll() {
         return this.repository.findAll();
     }
 
