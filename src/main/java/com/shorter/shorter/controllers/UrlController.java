@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -23,9 +22,6 @@ public class UrlController {
 
     @Autowired
     UrlService service;
-
-    @Autowired
-    CacheManager cacheManager;
 
     private static Logger logger = LoggerFactory.getLogger(UrlController.class);
 

@@ -23,13 +23,6 @@ public class UrlService {
 
     private UrlUtils utils;
 
-    public String redirectByShortUrl(String shortUrl) {
-        Optional<UrlEntity> checkExists = this.repository.findByShortUrl(shortUrl);
-        if(checkExists.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-
-        return checkExists.get().getDefaultUrl();
-    }
-
     public Optional<UrlEntity> findById(UUID id) {
         return this.repository.findById(id);
     }
@@ -47,15 +40,12 @@ public class UrlService {
     }
 
     public UrlEntity shorterUrl(String defaultUrl) {
-        Optional<UrlEntity> checkExists = this.repository.findByDefaultUrl(defaultUrl);
-        if(checkExists.isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT);
-
         UrlEntity url = new UrlEntity(defaultUrl, this.utils.generateAleatoryUrl());
         return this.repository.save(url);
     }
 
     public UrlEntity updateShortedUrl(UUID id, String defaultUrl) {
-        this.repository.findById(id).orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND) );
+        this.repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Not found!"));
 
         String shortUrl = this.utils.generateAleatoryUrl();
         UrlEntity updatedUrl = new UrlEntity(defaultUrl, shortUrl);
